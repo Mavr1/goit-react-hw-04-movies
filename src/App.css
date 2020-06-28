@@ -1,0 +1,48 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: antiquewhite;
+}
+
+.container {
+  margin: 0 auto;
+  width: 900px;
+  background-color: #fff;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  padding: 20px;
+}
+
+.header {
+  padding: 10px 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.navMenu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+}
+
+.navMenu-item:not(:last-child) {
+  margin-right: 20px;
+}
+
+.pageLink {
+  text-decoration: none;
+}
+
+.active-pageLink {
+  font-weight: 700;
+}
+
+.filmList-item {
+  margin-bottom: 4px;
+}
+
+.movieAbout {
+  display: flex;
+  padding-top: 30px;
+}
+
+.moviePoster {
+  margin-right: 30px;
+}
