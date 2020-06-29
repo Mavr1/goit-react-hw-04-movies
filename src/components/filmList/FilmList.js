@@ -1,14 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-const FilmList = ({ filmList }) => (
+const FilmList = ({ filmList, location }) => (
   <ol className="filmList">
     {filmList.map((item) => (
       <li key={item.id} className="filmList-item">
-        <Link to={`/movies/${item.id}`}>{item.title}</Link>
+        <Link
+          to={{
+            pathname: `/movies/${item.id}`,
+            state: { from: location.pathname },
+          }}
+        >
+          {item.title}
+        </Link>
       </li>
     ))}
   </ol>
 );
 
-export default FilmList;
+export default withRouter(FilmList);

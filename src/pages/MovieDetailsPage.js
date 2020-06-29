@@ -10,8 +10,19 @@ class MovieDetailsPage extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    getMovie(id).then((data) => this.setState({ movie: data.data }));
+    getMovie(id)
+      .then((data) => this.setState({ movie: data.data }))
+      .catch((error) => console.log(error));
   }
+
+  onGoBack = () => {
+    if (this.props.location.state) {
+      const { from } = this.props.location.state;
+      this.props.history.push(from);
+    } else {
+      this.props.history.push('/');
+    }
+  };
 
   render() {
     const {
@@ -26,6 +37,7 @@ class MovieDetailsPage extends Component {
       <>
         {this.state.movie.title && (
           <div className="movieDetails">
+            <button onClick={this.onGoBack}>Go back</button>
             <div className="movieAbout">
               <img
                 className="moviePoster"
@@ -44,7 +56,7 @@ class MovieDetailsPage extends Component {
               </div>
             </div>
             <div className="additionalInfo">
-              <h5>Additional Information</h5>
+              <h4>Additional Information</h4>
               <ul className="additionalInfo-menu">
                 <li className="additionalInfo-menuItem">
                   <Link to={`${this.props.match.url}/cast`}>Cast</Link>
