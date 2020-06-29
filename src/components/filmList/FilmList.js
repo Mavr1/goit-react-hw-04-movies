@@ -8,7 +8,7 @@ const FilmList = ({ filmList, location }) => (
         <Link
           to={{
             pathname: `/movies/${item.id}`,
-            state: { from: location.pathname },
+            state: { from: location.pathname, fromSearch: location.search },
           }}
         >
           {item.title}

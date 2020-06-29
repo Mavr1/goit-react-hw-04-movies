@@ -21,7 +21,11 @@ class MoviesPage extends Component {
     const prevQuery = queryString.parse(prevProps.location.search);
 
     if (prevQuery.query !== nextQuery.query) {
-      searchMovie(nextQuery)
+      if (nextQuery.query === undefined) {
+        this.setState({ filmList: null });
+        return;
+      }
+      searchMovie(nextQuery.query)
         .then((data) => formatFilmListArray(data))
         .then((data) => this.setState({ filmList: data }))
         .catch((error) => console.log(error));
@@ -33,15 +37,15 @@ class MoviesPage extends Component {
   };
 
   onSearchMovies = () => {
-    console.log(this.state.setSearchInput);
-    searchMovie(this.state.setSearchInput)
+    console.log(this.state.searchInput);
+    searchMovie(this.state.searchInput)
       .then((data) => formatFilmListArray(data))
       .then((data) => {
         const setUrl = this.props.history.push({
           pathname: this.props.location.pathname,
-          search: `query=${this.state.setSearchInput}`,
+          search: `query=${this.state.searchInput}`,
         });
-        this.setState({ filmList: data }, setUrl);
+        this.setState({ filmList: data, searchInput: '' }, setUrl);
       })
       .catch((error) => console.log(error));
   };
