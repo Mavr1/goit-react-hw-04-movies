@@ -1,9 +1,15 @@
-import React, { Component } from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
+import React, { lazy, Suspense, Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import { getMovie } from '../services/apiServices';
-import { formatGenresArray } from '../services/helpers';
-import Cast from './Cast';
-import Reviews from './Reviews';
+import MovieDetails from '../components/movieDetails/MovieDetails';
+import AdditionalInfoMenu from '../components/additionalInfoMenu/AdditionalInfoMenu';
+
+const CastPage = lazy(() =>
+  import('./CastPage' /* webpackChunkName: "CastPage" */)
+);
+const ReviewsPage = lazy(() =>
+  import('./ReviewsPage' /* webpackChunkName: "ReviewsPage" */)
+);
 
 class MovieDetailsPage extends Component {
   state = { movie: {} };
@@ -38,37 +44,23 @@ class MovieDetailsPage extends Component {
         {this.state.movie.title && (
           <div className="movieDetails">
             <button onClick={this.onGoBack}>Go back</button>
-            <div className="movieAbout">
-              <img
-                className="moviePoster"
-                src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-                alt="movie poster"
-                width={250}
-              />
-              <div className="movieDiscription">
-                <h2>{title}</h2>
-                <p>Release date: {release_date}</p>
-                <p>User score: {vote_average}</p>
-                <h3>Overview</h3>
-                <p>{overview}</p>
-                <h4>Genres</h4>
-                <p>{formatGenresArray(genres)}</p>
-              </div>
-            </div>
+            <MovieDetails
+              poster={poster_path}
+              title={title}
+              releaseDate={release_date}
+              vote={vote_average}
+              overview={overview}
+              genres={genres}
+            />
             <div className="additionalInfo">
               <h4>Additional Information</h4>
-              <ul className="additionalInfo-menu">
-                <li className="additionalInfo-menuItem">
-                  <Link to={`${this.props.match.url}/cast`}>Cast</Link>
-                </li>
-                <li className="additionalInfo-menuItem">
-                  <Link to={`${this.props.match.url}/reviews`}>Reviews</Link>
-                </li>
-              </ul>
-              <Switch>
-                <Route path="/movies/:id/cast" component={Cast} />
-                <Route path="/movies/:id/reviews" component={Reviews} />
-              </Switch>
+              <AdditionalInfoMenu url={this.props.match.url} />
+              <Suspense fallback={<p>Loading...</p>}>
+                <Switch>
+                  <Route path="/movies/:id/cast" component={CastPage} />
+                  <Route path="/movies/:id/reviews" component={ReviewsPage} />
+                </Switch>
+              </Suspense>
             </div>
           </div>
         )}

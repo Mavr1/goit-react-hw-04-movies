@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getMovieReviews } from '../services/apiServices';
 import { formatFilmListArray } from '../services/helpers';
+import MovieReview from '../components/movieReview/MovieReview';
 
 class Reviews extends Component {
   state = { reviews: [] };
@@ -20,12 +21,7 @@ class Reviews extends Component {
           {this.state.reviews.length > 0 ? (
             this.state.reviews.map((item) => {
               const { author, content, id } = item;
-              return (
-                <li key={id} className="movieReview-item">
-                  <h5 className="movieReview-author">Author:{author}</h5>
-                  <p className="movieReview-review">{content}</p>
-                </li>
-              );
+              return <MovieReview key={id} author={author} review={content} />;
             })
           ) : (
             <p>We don't have any reviews for this movie</p>

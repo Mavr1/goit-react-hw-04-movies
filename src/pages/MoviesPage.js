@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
+import Search from '../components/search/Search';
+import FilmList from '../components/filmList/FilmList';
 import { searchMovie } from '../services/apiServices';
 import { formatFilmListArray } from '../services/helpers';
-import FilmList from '../components/filmList/FilmList';
 
 class MoviesPage extends Component {
   state = { searchInput: '', filmList: null };
@@ -37,7 +38,6 @@ class MoviesPage extends Component {
   };
 
   onSearchMovies = () => {
-    console.log(this.state.searchInput);
     searchMovie(this.state.searchInput)
       .then((data) => formatFilmListArray(data))
       .then((data) => {
@@ -53,16 +53,11 @@ class MoviesPage extends Component {
   render() {
     return (
       <>
-        <div className="movies-search">
-          <input
-            className="movies-searchInput"
-            type="text"
-            value={this.state.searchInput}
-            onChange={this.setSearchInput}
-            placeholder="type Avatar"
-          />
-          <button onClick={this.onSearchMovies}>Search</button>
-        </div>
+        <Search
+          value={this.state.searchInput}
+          onInputChange={this.setSearchInput}
+          onSearchMovies={this.onSearchMovies}
+        />
         {this.state.filmList !== null && (
           <FilmList filmList={this.state.filmList} />
         )}
