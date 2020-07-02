@@ -1,15 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-const AdditionalInfoMenu = ({ url }) => (
+const AdditionalInfoMenu = ({ url, location }) => (
   <ul className="additionalInfo-menu">
     <li className="additionalInfo-menuItem">
-      <Link to={`${url}/cast`}>Cast</Link>
+      <Link
+        to={{
+          pathname: `${url}/cast`,
+          state: { from: true },
+        }}
+      >
+        Cast
+      </Link>
     </li>
     <li className="additionalInfo-menuItem">
-      <Link to={`${url}/reviews`}>Reviews</Link>
+      <Link
+        to={{
+          pathname: `${url}/reviews`,
+          state: { from: true },
+        }}
+      >
+        Reviews
+      </Link>
     </li>
   </ul>
 );
 
-export default AdditionalInfoMenu;
+export default withRouter(AdditionalInfoMenu);

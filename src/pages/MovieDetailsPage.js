@@ -23,8 +23,7 @@ class MovieDetailsPage extends Component {
 
   onGoBack = () => {
     if (this.props.location.state) {
-      const { from, fromSearch } = this.props.location.state;
-      this.props.history.push(from + fromSearch);
+      this.props.location.state.from && this.props.history.goBack();
     } else {
       this.props.history.push('/');
     }
@@ -57,8 +56,14 @@ class MovieDetailsPage extends Component {
               <AdditionalInfoMenu url={this.props.match.url} />
               <Suspense fallback={<p>Loading...</p>}>
                 <Switch>
-                  <Route path="/movies/:id/cast" component={CastPage} />
-                  <Route path="/movies/:id/reviews" component={ReviewsPage} />
+                  <Route
+                    path={`${this.props.match.path}/cast`}
+                    component={CastPage}
+                  />
+                  <Route
+                    path={`${this.props.match.path}/reviews`}
+                    component={ReviewsPage}
+                  />
                 </Switch>
               </Suspense>
             </div>
