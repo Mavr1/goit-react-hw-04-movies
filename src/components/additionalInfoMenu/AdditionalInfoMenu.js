@@ -7,7 +7,7 @@ const AdditionalInfoMenu = ({ url, location }) => (
       <Link
         to={{
           pathname: `${url}/cast`,
-          state: { from: true },
+          state: { from: location.state.from },
         }}
       >
         Cast
@@ -17,7 +17,7 @@ const AdditionalInfoMenu = ({ url, location }) => (
       <Link
         to={{
           pathname: `${url}/reviews`,
-          state: { from: true },
+          state: { from: location.state.from },
         }}
       >
         Reviews

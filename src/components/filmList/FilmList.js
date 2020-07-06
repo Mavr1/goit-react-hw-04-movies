@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const FilmList = ({ filmList, location }) => (
   <ol className="filmList">
@@ -8,7 +8,7 @@ const FilmList = ({ filmList, location }) => (
         <Link
           to={{
             pathname: `/movies/${item.id}`,
-            state: { from: true },
+            state: { from: location.search },
           }}
         >
           {item.title}
@@ -18,4 +18,4 @@ const FilmList = ({ filmList, location }) => (
   </ol>
 );
 
-export default FilmList;
+export default withRouter(FilmList);

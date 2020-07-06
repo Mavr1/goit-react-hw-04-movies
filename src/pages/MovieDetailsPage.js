@@ -22,8 +22,13 @@ class MovieDetailsPage extends Component {
   }
 
   onGoBack = () => {
-    if (this.props.location.state) {
-      this.props.location.state.from && this.props.history.goBack();
+    if (this.props.location.state.from) {
+      const { from } = this.props.location.state;
+      from &&
+        this.props.history.push({
+          pathname: `/movies`,
+          search: from,
+        });
     } else {
       this.props.history.push('/');
     }
